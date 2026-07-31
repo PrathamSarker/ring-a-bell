@@ -20,11 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashcard.ui.theme.FlashCardTheme
 
 ////////////    BUTTONS    ////////////
 
@@ -64,10 +62,10 @@ fun GuessingCardScreen(
     cardList: List<FlashCard>,
     viewModel: FlashCardViewModel = viewModel()
 ) {
-    var currentCard by remember { mutableStateOf(viewModel.getRandomCard(cardList)) }
+    var currentCard by remember { mutableStateOf(viewModel.getRandomCard()) }
 
-    var cue = viewModel.showCue(currentCard)
-    var ans = viewModel.showAns(currentCard)
+    val cue = viewModel.showCue(currentCard)
+    val ans = viewModel.showAns(currentCard)
 
     var hasAnswered by remember { mutableStateOf(false) }
     var isCorrect: Boolean? by remember { mutableStateOf(null) }
@@ -153,7 +151,7 @@ fun GuessingCardScreen(
                 onNext = {
                     hasAnswered = false
                     isCorrect = null
-
+                    currentCard = viewModel.getRandomCard()
                 }
             )
         }

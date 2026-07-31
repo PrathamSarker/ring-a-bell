@@ -42,16 +42,18 @@ class FlashCardViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun showCue(flashCard: FlashCard): String {
-        return flashCard.Cue
+    fun showCue(flashCard: FlashCard?): String {
+        return flashCard?.Cue ?: ""
     }
 
-    fun showAns(flashCard: FlashCard): String {
-        return flashCard.Answer
+    fun showAns(flashCard: FlashCard?): String {
+        return flashCard?.Answer ?: ""
     }
+    //Elvis operator. if flashcard is not null return answer else return empty string
 
-    fun getRandomCard(flashCardList: List<FlashCard>): FlashCard {
-        return flashCardList.random()
+    
+    fun getRandomCard(): FlashCard? {
+        return flashCardList.value.randomOrNull()       //if empty list random wouldve broke
     }
 
     fun getAccuracy(correctAns: Int, totalAns: Int): Float {

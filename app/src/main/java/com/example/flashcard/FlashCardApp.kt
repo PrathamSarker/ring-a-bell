@@ -59,6 +59,7 @@ fun FlashCardApp(viewModel: FlashCardViewModel = viewModel()){
 
     BackHandler(enabled = (currentScreen != "not_gonna_work")) {
         when (currentScreen) {
+            "viewCard" -> currentScreen = "list"
             "createNewCard" -> currentScreen = "list"
             "practice" -> currentScreen = "list"
             "list" -> currentScreen = "not_gonna_work"
