@@ -14,15 +14,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.flashcard.ui.theme.FlashCardTheme
+import kotlin.math.roundToInt
 
 ////////////    BUTTONS    ////////////
 
@@ -54,13 +58,21 @@ fun RevealAnsButton(onRevealAns: () -> Unit){
     }
 }
 
+@Composable
+fun ReviewButton(onReview: () -> Unit){
+    Button(onClick = onReview){
+        Text(text = "Review & Improve")
+    }
+}
+
 /////////////////////////////////////
 
 
 @Composable
 fun GuessingCardScreen(
     cardList: List<FlashCard>,
-    viewModel: FlashCardViewModel = viewModel()
+    viewModel: FlashCardViewModel = viewModel(),
+    onReview: () -> Unit
 ) {
     var currentCard by remember { mutableStateOf(viewModel.getRandomCard()) }
 
@@ -69,6 +81,11 @@ fun GuessingCardScreen(
 
     var hasAnswered by remember { mutableStateOf(false) }
     var isCorrect: Boolean? by remember { mutableStateOf(null) }
+    var isIncorrect by remember { mutableStateOf(false) }
+
+    val correctAns by viewModel.correctAns.collectAsState()
+    val totalAns by viewModel.totalAns.collectAsState()
+    val accuracy = viewModel.getAccuracy(correctAns, totalAns)
 
 
     Column(
@@ -82,7 +99,7 @@ fun GuessingCardScreen(
                 .height(250.dp)
                 .width(200.dp),
             shape = RoundedCornerShape(8.dp)
-        )  //inside this box- ans and cue
+        )  //inside this box: ans and cue
         {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -127,7 +144,7 @@ fun GuessingCardScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-//all the buttons
+//all the buttons logic
         if (!hasAnswered) {
             RevealAnsButton(onRevealAns = {
                 hasAnswered = true
@@ -136,53 +153,70 @@ fun GuessingCardScreen(
             Row(modifier = Modifier) {
                 NoButton(
                     onNo = {
+                        viewModel.incrementTotal()
+                        viewModel.incrementIncorrect()
                         isCorrect = false
+                        isIncorrect = true
+                        currentCard?.let { viewModel.setCardIncorrect(it, true) }
                     }
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 YesButton(
                     onYes = {
+                        viewModel.incrementTotal()
+                        viewModel.incrementCorrect()
                         isCorrect = true
+                        isIncorrect = false
+                        currentCard?.let { viewModel.setCardIncorrect(it, false) }
                     }
                 )
             }
-        } else if (hasAnswered && isCorrect != null) {
-            NextButton(
-                onNext = {
-                    hasAnswered = false
-                    isCorrect = null
-                    currentCard = viewModel.getRandomCard()
-                }
-            )
+        } else if (hasAnswered && isCorrect == false) {
+            Row(modifier = Modifier) {
+                NextButton(
+                    onNext = {
+                        hasAnswered = false
+                        isCorrect = null
+                        currentCard = viewModel.getRandomCard()
+                    }
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                ReviewButton(onReview = onReview)
+            }
+        } else if (hasAnswered && isCorrect == true) {
+            Row(modifier = Modifier) {
+                NextButton(
+                    onNext = {
+                        hasAnswered = false
+                        isCorrect = null
+                        currentCard = viewModel.getRandomCard()
+                    }
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                ReviewButton(onReview = onReview)
+            }
         }
 
-//viewModel logic
-        if (hasAnswered) {
-            viewModel.totalAns++
-        }
-        if (isCorrect == true) {
-            viewModel.correctAns++
-        } else if (isCorrect == false) {
-            viewModel.incorrectAns++
-        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Accuracy: ${accuracy.roundToInt()}%")
     }
 }
 
 
 
 
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GuessingCardScreenPreview() {
-//    FlashCardTheme {
-//        GuessingCardScreen(
-//            cardList = listOf(
-//                FlashCard(Cue = "What is IPv6?", Answer = "Internet Protocol version 6"),
-//                FlashCard(Cue = "What is DNS?", Answer = "Domain Name System"),
-//                FlashCard(Cue = "What is DHCP?", Answer = "Dynamic Host Configuration Protocol")
-//            )
-//        )
-//    }
-//}
-//}
+@Preview(showBackground = true)
+@Composable
+fun GuessingCardScreenPreview() {
+    FlashCardTheme {
+        GuessingCardScreen(
+            cardList = listOf(
+                FlashCard(Cue = "What is IPv6?", Answer = "Internet Protocol version 6"),
+                FlashCard(Cue = "What is DNS?", Answer = "Domain Name System"),
+                FlashCard(Cue = "What is DHCP?", Answer = "Dynamic Host Configuration Protocol")
+            ),
+            onReview = {}
+        )
+    }
+}

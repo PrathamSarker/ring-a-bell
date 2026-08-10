@@ -25,16 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 
-
-
 @Composable
-fun CardListScreen(
+fun WrongGuessListScreen(
                    viewModel: FlashCardViewModel = viewModel(),
                    onCardClick: (FlashCard) -> Unit,
-                   onCreateNewCard: () -> Unit,
-                   onStartPractice: () -> Unit) {
+                   onBack: () -> Unit) {
 
-    val flashCardList by viewModel.flashCardList.collectAsState()
+    val wrongGuessCardList by viewModel.wrongGuessCardList.collectAsState()
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -45,7 +42,7 @@ fun CardListScreen(
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "Your FlashCard List",
+            text = "Wrong Guess List",
             fontSize = 23.sp
         )
 
@@ -56,7 +53,7 @@ fun CardListScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            items(flashCardList) { card ->
+            items(wrongGuessCardList) { card ->
                 Card(modifier = Modifier
                     .padding(8.dp)
                     .width(150.dp)
@@ -75,41 +72,24 @@ fun CardListScreen(
 
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically) {
-            NewCardFAB(onCreateNewCard = onCreateNewCard)
-
-            Spacer(modifier = Modifier.width(60.dp))
-
-            StartPracticeFAB(onStartFAB = onStartPractice)
+            
+            // Reusing FAB style but calling onBack for "Review & Improve" flow back navigation
+            BackToPracticeFAB(onBack = onBack)
         }
     }
 }
 
 
-
-
-
-
 ///////////////    BUTTONS    ///////////////////
+
 @Composable
-fun NewCardFAB(onCreateNewCard: () -> Unit){
+fun BackToPracticeFAB(onBack: () -> Unit){
     FloatingActionButton(
         modifier = Modifier.padding(16.dp),
-        onClick = { onCreateNewCard() }
+        onClick = { onBack() }
     ) {
         Text(modifier=Modifier.padding(14.dp),
-            text = "Add New Card")
-    }
-}
-
-
-@Composable
-fun StartPracticeFAB(onStartFAB: () -> Unit){
-    FloatingActionButton(
-        modifier = Modifier.padding(16.dp),
-        onClick = {onStartFAB()}
-    ){
-        Text(modifier=Modifier.padding(13.dp),
-            text = "Start Practice")
+            text = "Back to Practice")
     }
 }
 

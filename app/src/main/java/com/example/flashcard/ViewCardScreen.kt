@@ -11,11 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberOverscrollEffect
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -33,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flashcard.ui.theme.FlashCardTheme
 
 
-/////////      BUTTONS  /////
+/////////    BUTTONS    /////
 
 @Composable
 fun EditButton(onEdit:() -> Unit){
@@ -53,17 +54,31 @@ fun CancelButton(onCancel:() -> Unit){
     }
 }
 
-//@Composable
-//fun AlertBox(
-//    onDismiss: () -> Unit,
-//    onConfirm: () -> Unit,
-//    title: String,
-//    text: String
-//){
-//    AlertDialog()
-//}
+@Composable
+fun AlertBox(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    title: String,
+    text: String
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = title) },
+        text = { Text(text = text) },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Yes")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("No")
+            }
+        }
+    )
+}
 
-///////////////
+////////////////////////////
 
 
 @Composable
@@ -77,14 +92,28 @@ fun ViewCardScreen(
     var cue by remember(selectedCard) { mutableStateOf(selectedCard.Cue) }
     var ans by remember(selectedCard) { mutableStateOf(selectedCard.Answer) }
 
-    var isEditing by remember{mutableStateOf(false)}
+    var isEditing by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
-    var flipped by remember {mutableStateOf(false)}
+    var flipped by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(
         targetValue = if (flipped) 180f else 0f
     )
 
     var displayText by remember { mutableStateOf("Tap on the card to see the answer") }
+
+    if (showDeleteDialog) {
+        AlertBox(
+            onDismiss = {showDeleteDialog = false },
+            onConfirm = {
+                viewModel.deleteCard(selectedCard)
+                showDeleteDialog = false
+                onGoToList()
+            },
+            title = "Delete FlashCard",
+            text = "Are you sure you want to delete the FlashCard?"
+        )
+    }
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -158,10 +187,7 @@ fun ViewCardScreen(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 DeleteButton(onDelete = {
-                        viewModel.deleteCard(selectedCard)
-                        cue = ""
-                        ans = ""
-                        onGoToList()
+                    showDeleteDialog = true
                 })
             } else {
                 SaveButton(onSave = {
@@ -191,14 +217,13 @@ fun ViewCardScreen(
 
 
 
-
-@Preview(showBackground = true)
-@Composable
-fun ViewCardScreenPreview() {
-    FlashCardTheme {
-        ViewCardScreen(
-            selectedCard = FlashCard(Cue = "Capital of Bangladesh?", Answer = "Dhaka"),
-            onGoToList = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ViewCardScreenPreview() {
+//    FlashCardTheme {
+//        ViewCardScreen(
+//            selectedCard = FlashCard(Cue = "Capital of Bangladesh?", Answer = "Dhaka"),
+//            onGoToList = {}
+//        )
+//    }
+//}

@@ -52,17 +52,32 @@ fun FlashCardApp(viewModel: FlashCardViewModel = viewModel()){
             val flashCardList by viewModel.flashCardList.collectAsState()
             GuessingCardScreen(
                 cardList = flashCardList,
-                viewModel = viewModel
+                viewModel = viewModel,
+                onReview = {
+                    currentScreen = "wrongGuessList"
+                }
+            )
+        }
+        "wrongGuessList" -> {
+            WrongGuessListScreen(
+                viewModel = viewModel,
+                onCardClick = { card ->
+                    selectedCard = card
+                    currentScreen = "viewCard"
+                },
+                onBack = {
+                    currentScreen = "practice"
+                }
             )
         }
     }
 
-    BackHandler(enabled = (currentScreen != "not_gonna_work")) {
+    BackHandler(enabled = (currentScreen != "list")) {
         when (currentScreen) {
             "viewCard" -> currentScreen = "list"
             "createNewCard" -> currentScreen = "list"
             "practice" -> currentScreen = "list"
-            "list" -> currentScreen = "not_gonna_work"
+            "wrongGuessList" -> currentScreen = "practice"
         }
     }
 

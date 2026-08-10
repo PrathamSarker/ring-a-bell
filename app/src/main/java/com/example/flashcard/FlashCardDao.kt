@@ -11,9 +11,6 @@ interface FlashCardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCard(card: FlashCard)
 
-    @Update
-    suspend fun updateCard(card: FlashCard)     //not used
-
     @Delete
     suspend fun deleteCard(card: FlashCard)
 }

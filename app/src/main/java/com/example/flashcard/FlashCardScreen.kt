@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -64,12 +65,12 @@ fun DeleteButton(onDelete : () -> Unit){
 fun FlashCardScreen(viewModel: FlashCardViewModel = viewModel(),
                     onGoToList: () -> Unit) {
 
-    var cue by remember { mutableStateOf("") }
-    var ans by remember { mutableStateOf("") }
+    var cue by remember {mutableStateOf("") }
+    var ans by remember {mutableStateOf("") }
 
     var error:Boolean? by remember {mutableStateOf(null)}    //error handling null
 
-    var displayText by remember { mutableStateOf("Tap on the card to add the answer") }
+    var displayText by remember {mutableStateOf("Tap on the card to add the answer") }
 
     var flipped by remember {mutableStateOf(false)}
 
@@ -140,7 +141,7 @@ fun FlashCardScreen(viewModel: FlashCardViewModel = viewModel(),
         Text(
             text = displayText,
             color = when(error){
-                null -> Color.Black
+                null -> MaterialTheme.colorScheme.onBackground
                 true -> Color.Red
                 false -> Color.Green
             }
@@ -175,11 +176,11 @@ fun FlashCardScreen(viewModel: FlashCardViewModel = viewModel(),
             SaveButton(
                 onSave = {
                     if (cue.isNotEmpty() && ans.isNotEmpty()) {
+                        displayText = "FlashCard saved successfully!"
                         viewModel.addCard(FlashCard(Cue = cue, Answer = ans))
                         cue = ""
                         ans = ""
                         error = false
-                        displayText = "FlashCard saved successfully!"
                         flipped = false
                         onGoToList()
                     } else {
