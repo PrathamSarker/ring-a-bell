@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 import android.R.attr.text
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashcard.ui.theme.FlashCardTheme
+import com.example.ringabell.ui.theme.RingABellTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
@@ -62,13 +62,13 @@ fun DeleteButton(onDelete : () -> Unit){
 //////////////////////////////////
 
 @Composable
-fun FlashCardScreen(viewModel: FlashCardViewModel = viewModel(),
+fun RingABellScreen(viewModel: FlashCardViewModel = viewModel(),
                     onGoToList: () -> Unit) {
 
     var cue by remember {mutableStateOf("") }
     var ans by remember {mutableStateOf("") }
 
-    var error:Boolean? by remember {mutableStateOf(null)}    //error handling null
+    var error:Boolean? by remember {mutableStateOf(null)}    //null error handling
 
     var displayText by remember {mutableStateOf("Tap on the card to add the answer") }
 

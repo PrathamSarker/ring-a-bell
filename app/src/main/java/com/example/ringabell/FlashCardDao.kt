@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
@@ -11,13 +11,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun FlashCardApp(viewModel: FlashCardViewModel = viewModel()){
+fun RingABellApp(viewModel: FlashCardViewModel = viewModel()){
     var currentScreen by remember { mutableStateOf("list")}
     var selectedCard by remember { mutableStateOf<FlashCard?>(null) }
 
     when(currentScreen){
         "createNewCard" -> {
-            FlashCardScreen(viewModel = viewModel,
+            RingABellScreen(viewModel = viewModel,
                 onGoToList = {
                     currentScreen = "list"
                 })

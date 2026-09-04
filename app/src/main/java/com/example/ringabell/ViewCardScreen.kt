@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashcard.ui.theme.FlashCardTheme
+import com.example.ringabell.ui.theme.RingABellTheme
 
 
 /////////    BUTTONS    /////
@@ -44,8 +44,8 @@ fun EditButton(onEdit:() -> Unit){
     }
 }
 
-// SaveButton is designed in another screen
-// DeleteButton is designed in another screen
+//SaveButton is designed in another screen
+//DeleteButton is designed in another screen
 
 @Composable
 fun CancelButton(onCancel:() -> Unit){
@@ -220,7 +220,7 @@ fun ViewCardScreen(
 //@Preview(showBackground = true)
 //@Composable
 //fun ViewCardScreenPreview() {
-//    FlashCardTheme {
+//    RingABellTheme {
 //        ViewCardScreen(
 //            selectedCard = FlashCard(Cue = "Capital of Bangladesh?", Answer = "Dhaka"),
 //            onGoToList = {}

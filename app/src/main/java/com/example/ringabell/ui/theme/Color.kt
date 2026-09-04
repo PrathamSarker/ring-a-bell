@@ -1,4 +1,4 @@
-package com.example.flashcard.ui.theme
+package com.example.ringabell.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

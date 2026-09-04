@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.flashcard.ui.theme.FlashCardTheme
+import com.example.ringabell.ui.theme.RingABellTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -16,9 +16,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            FlashCardTheme {
+            RingABellTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
-                    FlashCardApp()
+                    RingABellApp()
                 }
             }
         }

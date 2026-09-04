@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FlashCard"
+rootProject.name = "RingABell"
 include(":app")

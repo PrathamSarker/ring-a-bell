@@ -1,4 +1,4 @@
-package com.example.flashcard
+package com.example.ringabell
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.flashcard.ui.theme.FlashCardTheme
+import com.example.ringabell.ui.theme.RingABellTheme
 import kotlin.math.roundToInt
 
 ////////////    BUTTONS    ////////////
@@ -208,7 +208,7 @@ fun GuessingCardScreen(
 //@Preview(showBackground = true)
 //@Composable
 //fun GuessingCardScreenPreview() {
-//    FlashCardTheme {
+//    RingABellTheme {
 //        GuessingCardScreen(
 //            cardList = listOf(
 //                FlashCard(Cue = "What is IPv6?", Answer = "Internet Protocol version 6"),
