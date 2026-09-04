@@ -87,7 +87,6 @@ fun GuessingCardScreen(
     val totalAns by viewModel.totalAns.collectAsState()
     val accuracy = viewModel.getAccuracy(correctAns, totalAns)
 
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -157,7 +156,7 @@ fun GuessingCardScreen(
                         viewModel.incrementIncorrect()
                         isCorrect = false
                         isIncorrect = true
-                        currentCard?.let { viewModel.setCardIncorrect(it, true) }
+                        currentCard?.let {viewModel.setCardIncorrect(it, true)}
                     }
                 )
                 Spacer(modifier = Modifier.width(16.dp))
@@ -167,7 +166,7 @@ fun GuessingCardScreen(
                         viewModel.incrementCorrect()
                         isCorrect = true
                         isIncorrect = false
-                        currentCard?.let { viewModel.setCardIncorrect(it, false) }
+                        currentCard?.let {viewModel.setCardIncorrect(it, false)}
                     }
                 )
             }
@@ -206,17 +205,17 @@ fun GuessingCardScreen(
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun GuessingCardScreenPreview() {
-    FlashCardTheme {
-        GuessingCardScreen(
-            cardList = listOf(
-                FlashCard(Cue = "What is IPv6?", Answer = "Internet Protocol version 6"),
-                FlashCard(Cue = "What is DNS?", Answer = "Domain Name System"),
-                FlashCard(Cue = "What is DHCP?", Answer = "Dynamic Host Configuration Protocol")
-            ),
-            onReview = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GuessingCardScreenPreview() {
+//    FlashCardTheme {
+//        GuessingCardScreen(
+//            cardList = listOf(
+//                FlashCard(Cue = "What is IPv6?", Answer = "Internet Protocol version 6"),
+//                FlashCard(Cue = "What is DNS?", Answer = "Domain Name System"),
+//                FlashCard(Cue = "What is DHCP?", Answer = "Dynamic Host Configuration Protocol")
+//            ),
+//            onReview = {}
+//        )
+//    }
+//}
