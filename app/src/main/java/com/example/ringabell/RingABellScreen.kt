@@ -33,13 +33,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ringabell.ui.theme.RingABellTheme
 import androidx.compose.material3.Card
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.collectAsState
-
+import androidx.compose.ui.text.style.TextAlign
 
 
 //////////// BUTTONS /////////////
@@ -104,7 +105,11 @@ fun RingABellScreen(viewModel: FlashCardViewModel = viewModel(),
                     TextField(
                         value = cue,
                         onValueChange = { cue = it },
-                        placeholder = { Text("Enter your Cue") },
+                        placeholder = { Text(text="Enter your Cue",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center) },
+                        textStyle = LocalTextStyle.current.copy(
+                            textAlign = TextAlign.Center),
                         colors = TextFieldDefaults.colors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
@@ -118,12 +123,16 @@ fun RingABellScreen(viewModel: FlashCardViewModel = viewModel(),
                     Box(
                         modifier = Modifier.graphicsLayer{
                             rotationY = 180f
-                        }
+                        },
                     ){
                         TextField(
                             value = ans,
                             onValueChange = { ans = it },
-                            placeholder = { Text("Enter your Answer") },
+                            placeholder = { Text(text="Enter your Answer",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center) },
+                            textStyle = LocalTextStyle.current.copy(
+                                textAlign = TextAlign.Center),
                             colors = TextFieldDefaults.colors(
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
