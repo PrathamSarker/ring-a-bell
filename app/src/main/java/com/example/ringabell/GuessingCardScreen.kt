@@ -143,7 +143,7 @@ fun GuessingCardScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-//all the buttons logic
+//buttons logic
         if (!hasAnswered) {
             RevealAnsButton(onRevealAns = {
                 hasAnswered = true
