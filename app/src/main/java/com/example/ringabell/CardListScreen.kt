@@ -1,6 +1,7 @@
 package com.example.ringabell
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -74,10 +75,10 @@ fun CardListScreen(
         }
 
         Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically) {
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             NewCardFAB(onCreateNewCard = onCreateNewCard)
-
-            Spacer(modifier = Modifier.width(60.dp))
 
             StartPracticeFAB(onStartFAB = onStartPractice)
         }
