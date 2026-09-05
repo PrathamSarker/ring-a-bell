@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,13 +110,13 @@ fun GuessingCardScreen(
                         modifier = Modifier
                             .padding(16.dp),
                         text = cue,
-                        fontSize = 22.sp
+                        textAlign = TextAlign.Center
                     )
                 } else {
                     Text(
                         modifier = Modifier.padding(16.dp),
                         text = ans,
-                        fontSize = 22.sp
+                        textAlign = TextAlign.Center
                     )
                 }
             }

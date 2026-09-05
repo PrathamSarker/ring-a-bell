@@ -8,7 +8,7 @@ A lightweight, offline flashcard app for creating, practicing, and tracking reca
 ![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF.svg?logo=kotlin&logoColor=white)
 ![License](https://img.shields.io/badge/license-unspecified-lightgrey.svg)
-![Last Commit](https://img.shields.io/github/last-commit/PrathamSarker/flashCard-app)
+![Last Commit](https://img.shields.io/github/last-commit/PrathamSarker/ring-a-bell)
 
 > Build status and release-version badges are omitted — this repository has no CI workflow and no tagged releases yet.
 
@@ -36,38 +36,52 @@ Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to bui
 
 <table>
   <tr>
-    <td align="center">
-      <!-- PLACEHOLDER: Add screenshot of Card List screen here -->
-      <img src="path/to/screenshot-list.png" width="200" alt="Card List screen" /><br />
-      <sub>Card List</sub>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/card-list.png" width="200" alt="Card List screen" /><br />
+      <sub><b>Card List</b><br />Browse saved cards</sub>
     </td>
-    <td align="center">
-      <!-- PLACEHOLDER: Add screenshot of Create Card screen here -->
-      <img src="path/to/screenshot-create.png" width="200" alt="Create Card screen" /><br />
-      <sub>Create Card</sub>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/create-card.png" width="200" alt="Create Card screen" /><br />
+      <sub><b>Create Card</b><br />Add a new cue &amp; answer</sub>
     </td>
-    <td align="center">
-      <!-- PLACEHOLDER: Add screenshot of View/Edit Card screen here -->
-      <img src="path/to/screenshot-view.png" width="200" alt="View/Edit Card screen" /><br />
-      <sub>View / Edit Card</sub>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/edit-card.png" width="200" alt="Edit Card screen" /><br />
+      <sub><b>Edit Card</b><br />Update or delete a card</sub>
     </td>
-    <td align="center">
-      <!-- PLACEHOLDER: Add screenshot of Practice screen here -->
-      <img src="path/to/screenshot-practice.png" width="200" alt="Practice screen" /><br />
-      <sub>Practice</sub>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/practice-question.png" width="200" alt="Practice screen showing a cue" /><br />
+      <sub><b>Practice — Question</b><br />Reveal the answer when ready</sub>
     </td>
-    <td align="center">
-      <!-- PLACEHOLDER: Add screenshot of Wrong Guess Review screen here -->
-      <img src="path/to/screenshot-review.png" width="200" alt="Wrong Guess Review screen" /><br />
-      <sub>Wrong Guess Review</sub>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/practice-result.png" width="200" alt="Practice screen self-grading" /><br />
+      <sub><b>Practice — Self-Grade</b><br />Mark yourself right or wrong</sub>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/wrong-guess-prompt.png" width="200" alt="Incorrect answer prompting review" /><br />
+      <sub><b>Review Prompt</b><br />Jump into review after a miss</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/wrong-guess-list.png" width="200" alt="Wrong Guess List screen" /><br />
+      <sub><b>Wrong Guess List</b><br />Revisit every missed card</sub>
     </td>
   </tr>
 </table>
 
 ## Demo
 
-<!-- PLACEHOLDER: Add app demo GIF here -->
-![Ring a Bell Demo](path/to/demo.gif)
+<p align="center">
+  <img src="docs/demo.gif" width="240" alt="Ring a Bell demo — creating a card and practicing" />
+</p>
 
 ## Features
 
@@ -98,22 +112,9 @@ Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to bui
 
 ### Architecture Diagram
 
-<!-- PLACEHOLDER: Add architecture diagram here -->
-![Architecture Diagram](path/to/architecture-diagram.png)
-
-```
-Compose Screens (CardListScreen, RingABellScreen, ViewCardScreen,
-GuessingCardScreen, WrongGuessListScreen)
-        │
-        ▼
-FlashCardViewModel (AndroidViewModel, StateFlow)
-        │
-        ▼
-FlashCardDao (Room @Dao)
-        │
-        ▼
-FlashCardDatabase → "flashcard_database" (Room, on-device SQLite)
-```
+<p align="center">
+  <img src="docs/architecture-diagram.png" width="480" alt="Architecture diagram: Compose Screens to FlashCardViewModel to FlashCardDao to FlashCardDatabase to on-device SQLite storage" />
+</p>
 
 ## Getting Started
 
@@ -126,8 +127,8 @@ FlashCardDatabase → "flashcard_database" (Room, on-device SQLite)
 ### Clone the repository
 
 ```bash
-git clone https://github.com/PrathamSarker/flashCard-app.git
-cd flashCard-app
+git clone https://github.com/PrathamSarker/ring-a-bell.git
+cd ring-a-bell
 ```
 
 ### Open in Android Studio
@@ -165,8 +166,8 @@ No configuration is needed to build or run this project:
 
 ```
 app/src/main/java/com/example/ringabell/
-├── MainActivity.kt            # Single Activity host, calls setContent { RingABellApp() }
-├── RingABellApp.kt            # Top-level composable; manual string-based screen router + BackHandler
+├── MainActivity.kt             # Single Activity host, calls setContent { RingABellApp() }
+├── RingABellApp.kt             # Top-level composable; manual string-based screen router + BackHandler
 ├── FlashCard.kt                # Room @Entity — flashcard table (id, Cue, Answer)
 ├── FlashCardDao.kt             # Room @Dao — insert/delete/query cards as Flow<List<FlashCard>>
 ├── FlashCardDatabase.kt        # Room @Database singleton ("flashcard_database")
@@ -212,5 +213,4 @@ No `LICENSE` file is currently included in this repository. Until one is added, 
 <!-- PLACEHOLDER: author to fill in additional details -->
 
 - **Author:** [PrathamSarker](https://github.com/PrathamSarker)
-- **Play Store:** _add link here if/when published_
-- **Contact:** _add preferred contact method here_
+- **Contact:** sarkerpratham7@gmail.com 
