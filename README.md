@@ -1,16 +1,10 @@
-<!-- PLACEHOLDER: Add app icon/banner image here -->
-![Ring a Bell Banner](path/to/banner.png)
-
 # Ring a Bell?
 
-A lightweight, offline flashcard app for creating, practicing, and tracking recall — built entirely with Jetpack Compose and Room.
+A lightweight, offline flashcard app for creating, practicing, and tracking recall. Built with Jetpack Compose and Room.
 
 ![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF.svg?logo=kotlin&logoColor=white)
-![License](https://img.shields.io/badge/license-unspecified-lightgrey.svg)
 ![Last Commit](https://img.shields.io/github/last-commit/PrathamSarker/ring-a-bell)
-
-> Build status and release-version badges are omitted — this repository has no CI workflow and no tagged releases yet.
 
 ## Table of Contents
 
@@ -26,11 +20,11 @@ A lightweight, offline flashcard app for creating, practicing, and tracking reca
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Author](#author)
 
 ## Overview
 
-Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to build a custom deck of cue/answer cards and drill their own recall — students memorizing terms, language learners, or anyone studying for a test. There are no accounts, no network calls, and no ads: every card is created and stored locally on the device with Room, and practice sessions track your accuracy and let you review the cards you got wrong.
+Ring a Bell? is a single-user flashcard app for building a deck of cue-and-answer cards and testing your own recall: useful for memorizing terms, learning vocabulary, or studying for a test. There are no accounts, no network calls, and no ads. Every card is stored locally with Room, and practice sessions track your accuracy and let you review the cards you got wrong.
 
 ## Preview
 
@@ -85,15 +79,15 @@ Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to bui
 
 ## Features
 
-- Create flashcards with a cue and an answer, entered on a tap-to-flip card
-- Browse all saved cards in a scrollable list
-- View, edit, and delete existing cards, with a confirmation prompt before delete
-- Practice mode draws a random card, lets you reveal the answer, and self-grade it Yes/No
-- Running accuracy percentage calculated from your correct/incorrect self-grades
-- Automatic "wrong guess" review list of cards you marked incorrect, which a card leaves once you answer it correctly again
-- In-app back navigation between screens (hardware/gesture back button supported)
-- Material 3 theming with dynamic color on Android 12+ (API 31+) and dark theme support
-- Fully offline — no network access, no accounts, no ads
+- Create flashcards with a cue and answer on a tap-to-flip card
+- Browse saved cards in a scrollable list
+- View, edit, and delete cards, with a confirmation prompt before delete
+- Practice mode draws a random card, then reveals the answer for self-grading (Yes/No)
+- Tracks accuracy across your self-grades
+- Cards you get wrong go into a review list, and drop off it once you get them right
+- Back button navigation works across all screens
+- Material 3 theming with dynamic color on Android 12+ and dark theme support
+- Fully offline: no network access, no accounts, no ads
 
 ## Tech Stack & Architecture
 
@@ -101,14 +95,15 @@ Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to bui
 |---|---|
 | Language | Kotlin 2.2.10 (100% Kotlin, no Java) |
 | UI | Jetpack Compose (Material 3), no XML layouts |
-| State / DI | `AndroidViewModel` + Kotlin `StateFlow`/`Flow` (no Hilt/Dagger) |
+| State Management | `AndroidViewModel` + Kotlin `StateFlow` / `Flow` |
+| Dependency Injection | None |
 | Persistence | Room 2.8.4 (`room-runtime`, `room-ktx`, KSP-generated `room-compiler`) |
 | Async | Kotlin Coroutines & Flow |
 | Build | Gradle 9.6.0, Android Gradle Plugin 9.2.1, KSP 2.2.10-2.0.2 |
-| Navigation | None — manual `when`-based screen routing |
+| Navigation | Manual screen routing with `when` + `BackHandler` |
 | Networking | None |
 
-**Architecture:** the app follows a lightweight, single-module MVVM pattern rather than a formal layered/Clean Architecture. One `FlashCardViewModel` is shared across every screen (via the default `viewModel()` factory) and calls the Room `FlashCardDao` directly — there is no Repository layer and no dedicated `data`/`domain`/`presentation` package split. UI state lives either in the ViewModel's `StateFlow`s (card list, wrong-guess list, running score) or as local `remember { mutableStateOf(...) }` state inside each Composable. Screen-to-screen navigation is a hand-rolled `when(currentScreen: String)` switch in `RingABellApp.kt`, paired with a `BackHandler` for back-press routing — there is no Navigation Component dependency.
+Ring a Bell? follows a lightweight, single-module MVVM structure. Compose screens share a `FlashCardViewModel`, which manages state through `StateFlow` and talks directly to the Room `FlashCardDao`. There's no repository layer, no dependency-injection framework, and no Navigation Component: screen routing happens in `RingABellApp.kt`, and Room handles local persistence.
 
 ### Architecture Diagram
 
@@ -120,9 +115,9 @@ Ring a Bell? is a minimal, single-user flashcard app for anyone who wants to bui
 
 ### Prerequisites
 
-- Android Studio compatible with AGP 9.2.1 and Gradle 9.6 (a recent stable release channel)
-- JDK 21 (the Gradle daemon toolchain pinned in `gradle/gradle-daemon-jvm.properties`)
-- Android SDK Platform 36 (targetSdk) with a device/emulator running API 24 (minSdk) or higher
+- Android Studio compatible with AGP 9.2.1 and Gradle 9.6
+- JDK 21
+- Android SDK Platform 36 (targetSdk), with a device or emulator running API 24 (minSdk) or higher
 
 ### Clone the repository
 
@@ -137,12 +132,7 @@ Open the cloned folder in Android Studio and let it sync Gradle. No manual proje
 
 ### Configuration
 
-No configuration is needed to build or run this project:
-
-- No API keys or secrets are used
-- No `google-services.json` or Firebase setup is required
-- No release signing config is defined (release builds are currently unsigned)
-- `local.properties` only needs the standard `sdk.dir` entry, which Android Studio generates automatically on first sync
+No configuration is needed to build or run this project. There are no API keys, no Firebase setup, and no external services. `local.properties` only needs the `sdk.dir` entry, which Android Studio generates automatically on first sync.
 
 ### Build & run
 
@@ -160,7 +150,7 @@ No configuration is needed to build or run this project:
 
 ## Permissions
 
-`AndroidManifest.xml` declares **no permissions**. Ring a Bell? is fully offline — it doesn't access the network, camera, storage, notifications, or location — so no runtime or install-time permission is requested.
+Ring a Bell? doesn't request any permissions. It's fully offline and doesn't touch the network, camera, storage, notifications, or location.
 
 ## Project Structure
 
@@ -193,7 +183,7 @@ app/src/main/java/com/example/ringabell/
 ./gradlew connectedAndroidTest
 ```
 
-The project currently ships only the default Android Studio template tests (`ExampleUnitTest`, `ExampleInstrumentedTest`) as placeholders. JUnit4, Espresso, and Compose UI testing dependencies are already wired into `app/build.gradle.kts`, so real unit and Compose UI tests can be added without further setup.
+The project doesn't have meaningful automated test coverage. `ExampleUnitTest` and `ExampleInstrumentedTest` are the default Android Studio template stubs. JUnit, Espresso, and Compose UI testing dependencies are included in the build but unused.
 
 ## Contributing
 
@@ -201,16 +191,14 @@ This is a personal project, but contributions are welcome:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes with a clear, conventional message (e.g. `fix: correct accuracy calculation`)
-4. Push to your fork and open a pull request describing the change and why it's needed
+3. Commit your changes with a clear message
+4. Push to your fork and open a pull request describing the change
 
 ## License
 
-No `LICENSE` file is currently included in this repository. Until one is added, all rights are reserved by the author. If you're the maintainer and intend to open-source this project, consider adding a `LICENSE` file (e.g. MIT or Apache 2.0) to clarify how others may use, modify, and distribute the code.
+This project currently does not include an open-source license.
 
-## Acknowledgments
+## Author
 
-<!-- PLACEHOLDER: author to fill in additional details -->
-
-- **Author:** [PrathamSarker](https://github.com/PrathamSarker)
-- **Contact:** sarkerpratham7@gmail.com 
+**Pratham Sarker**
+[GitHub](https://github.com/PrathamSarker)
