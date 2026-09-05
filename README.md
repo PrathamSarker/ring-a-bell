@@ -1,6 +1,3 @@
-<!-- PLACEHOLDER: Add app icon/banner image here -->
-![Ring a Bell Banner](path/to/banner.png)
-
 # Ring a Bell?
 
 A lightweight, offline flashcard app for creating, practicing, and tracking recall — built entirely with Jetpack Compose and Room.
